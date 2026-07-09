@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, X, LayoutDashboard, Layers, Settings, AppWindow } from 'lucide-react';
+import { Menu, X, LayoutDashboard, Layers, AppWindow } from 'lucide-react';
 
 interface LayoutProps {
   children: React.ReactNode;
