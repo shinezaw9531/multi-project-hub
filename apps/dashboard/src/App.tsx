@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Layout } from './components/Layout';
-import { Layers, AppWindow, ExternalLink, Activity } from 'lucide-react';
+import { Layers, AppWindow, ExternalLink } from 'lucide-react';
 
 // Central Registry of all your standalone projects
 const PROJECTS_REGISTRY = [
