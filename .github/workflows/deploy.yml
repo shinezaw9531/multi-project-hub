@@ -1,0 +1,57 @@
+name: Deploy Multi-Project to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrently:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build All Workspaces
+        run: npx turbo run build
+
+      - name: Structure Consolidated Deployment Directory
+        run: |
+          mkdir -p deployment-dist
+          # Copy dashboard to the root directory
+          cp -r apps/dashboard/dist/* deployment-dist/
+          # Copy standalone projects into nested paths
+          mkdir -p deployment-dist/alpha
+          cp -r apps/project-alpha/dist/* deployment-dist/alpha/
+          mkdir -p deployment-dist/beta
+          cp -r apps/project-beta/dist/* deployment-dist/beta/
+
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'deployment-dist'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

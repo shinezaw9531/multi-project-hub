@@ -1,0 +1,16 @@
+{
+  "name": "multi-project-hub",
+  "private": true,
+  "version": "1.0.0",
+  "packageManager": "npm@10.8.1",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build"
+  },
+  "devDependencies": {
+    "turbo": "^2.10.4"
+  }
+}

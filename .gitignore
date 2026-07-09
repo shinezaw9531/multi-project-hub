@@ -1,0 +1,13 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Production builds
+dist/
+.turbo/
+
+# Environment variables & Local logs
+.env
+.env*.local
+*.log
+.DS_Store
